@@ -1,24 +1,38 @@
-node('nodejs') {
 
-        stage('Checkout') {
+pipeline {
 
-                    git branch: 'main',
+        agent {
 
-                                url: 'https://github.com/isingmyself2/do400-pipelines-control'
+                    node {
+
+                                    label 'nodejs'
+
+                    }
 
         }
 
-            stage('Backend Tests') {
+            stages {
 
-                        sh 'node ./backend/test.js'
+                        stage('Backend Tests') {
+
+                                        steps {
+
+                                                            sh 'node ./backend/test.js'
+
+                                        }
+
+                        }
+
+                                stage('Frontend Tests') {
+
+                                                steps {
+
+                                                                    sh 'node ./frontend/test.js'
+
+                                                }
+
+                                }
 
             }
 
-                stage('Frontend Tests') {
-
-                            sh 'node ./frontend/test.js'
-
-                }
-
-            
 }
